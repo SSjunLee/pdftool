@@ -71,10 +71,10 @@ class PDFViewer(tk.Frame):
 
     @property
     def enable(self):
-        return self.rect is None and self.pdf_name != ""
+        return self.rect is not None and self.pdf_name != ""
 
     def handleClick(self, event):
-        if self.enable:
+        if self.rect is None and self.pdf_name != "":
             self.start_x, self.start_y = (event.x, event.y)
             self.rect = self.canvas.create_rectangle(self.start_x, self.start_y, 1, 1, outline="red")
 
@@ -110,7 +110,7 @@ class PDFViewer(tk.Frame):
         self.canvas.delete(self.rect)
         self.rect = None
         self.pdf_name = ""
-        self.label_string = "请选择pdf"
+        self.label_string.set("请选择pdf")
 
     def init_btn(self):
         split_btn = tk.Button(self, text="开始切割")
